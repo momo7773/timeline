@@ -2,6 +2,11 @@ package com.ecnu.demo;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author Yiqing Tao
+ * @Date 2019-10-25
+ * the entity class comment, same as database design
+ */
 @Entity
 @Table(name="comment")
 public class Comment {
