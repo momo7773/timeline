@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name="comment")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
@@ -34,6 +34,14 @@ public class Comment {
         this.comment_time = comment_time;
         this.comment_img = comment_img;
     }
+
+    public Comment(String comment_name,String comment_content,String comment_time,String comment_img){
+        this.comment_name = comment_name;
+        this.comment_content = comment_content;
+        this.comment_time = comment_time;
+        this.comment_img = comment_img;
+    }
+
     public int getId() {
         return id;
     }
