@@ -35,7 +35,7 @@ public class CommentRepositoryTest {
     @Autowired
     private TestEntityManager testEntityManager;
 
-    @MockBean
+    @Autowired
     private CommentRepository commentRepository;
 
     private Comment newComment;
@@ -56,7 +56,6 @@ public class CommentRepositoryTest {
         List<Comment> comments = commentRepository.retrieveCommentLaterThanTime("2019-11-4 21:15:00");
 
         for (Comment comment : comments) {
-            Assert.assertEquals(1, comment.getId());
             Assert.assertEquals("momo", comment.getComment_name());
             Assert.assertEquals("testing repository", comment.getComment_content());
             Assert.assertEquals("2019-11-4 21:16:00", comment.getComment_time());
@@ -69,13 +68,8 @@ public class CommentRepositoryTest {
          this.testEntityManager.persist(newComment);
         List<Comment> comments = commentRepository.retrieveCommentEarlyThanTime("2019-11-4 21:17:00");
 
-         //Verify whether the method has been executed or not.
-         verify(commentRepository,never()).findFirstComment();
-         verify(commentRepository,never()).retrieveCommentLaterThanTime(Mockito.anyString());
-         verify(commentRepository).retrieveCommentEarlyThanTime(Mockito.anyString());
 
         for (Comment comment : comments) {
-            Assert.assertEquals(1, comment.getId());
             Assert.assertEquals("momo", comment.getComment_name());
             Assert.assertEquals("testing repository", comment.getComment_content());
             Assert.assertEquals("2019-11-4 21:16:00", comment.getComment_time());
@@ -90,10 +84,7 @@ public class CommentRepositoryTest {
         this.testEntityManager.persist(commentFake1);
         this.testEntityManager.persist(commentFake2);
         List<Comment> comments = commentRepository.retrieveCommentLaterThanTime("2019-11-4 23:00:00");
-        //verify whether the method has been executed or not.
-        verify(commentRepository,never()).findFirstComment();
-        verify(commentRepository,never()).retrieveCommentEarlyThanTime(Mockito.anyString());
-        verify(commentRepository).retrieveCommentLaterThanTime(Mockito.anyString());
+       
         Assert.assertEquals(2,comments.size());
     }
     @Test
@@ -104,7 +95,6 @@ public class CommentRepositoryTest {
         int count = 0;
         for (Comment comment : comments) {
             count++;
-            Assert.assertEquals(1, comment.getId());
             Assert.assertEquals("momo", comment.getComment_name());
             Assert.assertEquals("testing repository", comment.getComment_content());
             Assert.assertEquals("2019-11-4 21:16:00", comment.getComment_time());
